@@ -1,0 +1,121 @@
+%---------------------------------------------------------------------------
+%
+% :File:       hwtemplate.tex
+% :Purpose:    Homework for Model of software systems
+%
+%---------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{amsmath,amsfonts,enumerate}
+\usepackage{zed-csp}
+
+% Define admin constants
+\def\name{}
+\def\course{Models of Software Systems}
+\def\due{19.09.2018}
+\def\title{Assignment 1}
+
+\begin{document}
+%----------------------------
+% BEGIN HEADER PORTION
+%----------------------------
+\hspace*{-12mm} 
+\framebox{
+ \begin{minipage}[t]{\textwidth}
+  \vspace{1ex}
+	{\large\bf  \course} \hfill {\large\bf Name: \name}\\[1ex]
+	{\bf \title \hfill   Due: \due}
+  \vspace{1ex}
+ \end{minipage}
+}
+\vskip 0.1in
+%----------------------------
+% END HEADER PORTION
+%----------------------------
+
+\section{Lambda Language}
+Consider a language with alphabet $\{ \lambda, \bullet, (, ), x, y, z \}$ and syntax
+
+ \begin{syntax}
+     expression  & =  & variable~name | expression, expression\\
+     & | & $``$ \lambda $''$, variable~name, $``$ \bullet $''$, expression\\
+     & | & ``($"$, expression, ``)$"$;
+     \also
+     variable~name & = & $``$x$''$ | $``$y$''$ | $``$z$''$;
+ \end{syntax}
+
+Are the following wffs of the language? For those that are not briefly explain why.
+
+\begin{enumerate}[(a)]
+ \item $\lambda x \bullet yz$
+Yes, wff
+ \item $\lambda \bullet x \lambda \bullet y$ 
+No, it is not, as $ \lambda $ should be followed by a variable~name and not a $ \bullet $
+ \item $\lambda y \bullet x \bullet z$ 
+Yes, wff
+ \item $\lambda x \bullet x(yz)$
+Yes, wff
+ \item $\lambda x \bullet \lambda y \bullet xyz$
+Yes, wff
+\end{enumerate}
+
+\section{Stars, Derivation}
+Using the {\em Stars} formal system that was discussed during the Lab 1 (see slide 11) formally show that
+ ${\star}{\diamond}{\star}{\star}{\circ}{\star}{\star}{\star}{\star}{\star}\ {\vdash}\ {\star}{\diamond}{\star}{\star}{\star}{\star}{\circ}{\star}{\star}{\star}{\star}{\star}{\star}{\star}$
+
+\section{Stars, Incompleteness}
+During the Lab 1 the {\em Stars} formal system (see slides 11-12) was interpreted as a system for adding certain positive integers. For example, $1 + 3 = 4$ could be proved a theorem of {\em Stars}.
+
+\begin{enumerate}[(a)]
+ \item Augment {\em Stars} so that you can prove statements such as $3+4=7$ and $15 + 2 = 17$ to be theorems.
+ You need to handle only expressions involving the addition of positive integers.
+ \textsc{Note:} Your answer should include the alphabet, syntax, inference system, and interpretation.
+
+ \item Prove that $3 + 4 = 7$ is a theorem of the augmented system.
+\end{enumerate}
+
+\section{Propositional logic}
+
+\begin{enumerate}[1.]
+	\item Construct a truth table for each of the following:
+	
+	\begin{enumerate}[a.]
+		\item (Example) $p \land (p \lor q)$
+		\begin{displaymath}
+		\begin{array}{cccc} \hline
+		p & q & (p \lor q) & \quad p \land (p \lor q)\\
+		\hline
+		T & T & T & T\\
+		T & F & T & T\\
+		F & T & T & F\\
+		F & F & F & F\\
+		\hline \end{array}
+		\end{displaymath}
+		
+		\item $(p \land q) \lor (\neg p \land \neg q)$
+		
+		\item $p \implies (q \land r)$
+		
+		\item $(p \implies (q \land r)) \Leftrightarrow ((p \implies q) \land (p \implies r))$
+		
+	\end{enumerate}
+	\item Which of the above sentences are:
+	\begin{enumerate}
+		\item tautologies?
+		\item satisfiable?
+	\end{enumerate}
+	\item For every satisfiable sentence detected in 2., provide z3 code that proves the satisfiability.\\
+	(Example) For ``1.a.'':
+	\begin{verbatim}
+	(declare-const p Bool)
+	(declare-const q Bool)
+	(define-fun conjecture () Bool
+	    (and p (or p q)))
+	(assert conjecture)
+	(check-sat)
+	\end{verbatim}
+	\item For every tautology detected in 2., provide z3 code that proves the tautology.
+\end{enumerate}
+
+\end{document}
